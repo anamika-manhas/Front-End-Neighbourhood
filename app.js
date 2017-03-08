@@ -146,12 +146,23 @@ var myViewmodel= function()
                    return markerIcon;
                };
 
-            self.filterText = ko.observable('');
-            self.applyFilter = function()
-            {
-              var filter=self.filterText();
-              infoWindow.close();
-            
+               var location = function(info)
+               {
+                 var self = this;
+                 this.name = info.name;
+                 this.lat = info.lat;
+                 this.lng = info.lng;
+                 this.URL = "";
+                 this.street = "";
+                 this.city = "";
+                 var client_id = WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ;
+                 var client_secret = ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY;
 
-          }
+                 this.visible = ko.observableu(true);
+                 var URL = 'https://api.foursquare.com/v2/venues/search?11='+this.lat + ',' + this.lng + ',' + '&client_id' +
+                 client_id + '&client_secret' + client_secret + this.URL + this.street + this.city ;               
+               }
+
+
+
   };

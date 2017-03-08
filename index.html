@@ -29,8 +29,8 @@
         </div>
       <div style="width:100%;" class="input-group">
       </div>
-        <input id="filterInputText" type="text" class="form-control" placeholder="filter"  data-bind="value: filterText, valueUpdate: 'afterkeydown', event: {keyup: applyFilter}">
-      <br>
+        <input id="filterInputText" type="text" class="form-control" placeholder="filter"  >
+        <br>
       <ul class="list-group" data-bind="foreach: markers">
         <a class="list-group-item" data-bind="text: title, event:{click: markerwindow}"></a>
       </ul>
