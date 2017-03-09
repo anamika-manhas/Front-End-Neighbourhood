@@ -196,20 +196,20 @@ var myViewmodel= function()
         self.filteredItems = ko.computed(function() {
           var filter = self.filter();
           if (!filter) {
-          for(var i = 0; i < markers.length; i++)
+          for(var j = 0; j < markers.length; j++)
           {
 
-            markers[i].setVisible()
+            markers[j].setVisible()
             console.log(markers)
           }
           return self.items();
           }
-          return self.items().filter(function(i) {
-          var m= i.title.toLowerCase().indexOf(filter) > -1;
-          i.marker.setVisible(m);
+          return self.items().filter(function(j) {
+          var m= j.title.toLowerCase().indexOf(filter) > -1;
+          j.marker.setVisible(m);
           return m;
       });
     }
   }
-  
+
   };
