@@ -183,8 +183,33 @@ var myViewmodel= function()
 
 
 
-               }
 
 
+       function ViewModel(marker) {
+        var self = this;
+      //Gets value from the search and filters through the array.
+        self.filter = ko.observable('');
+      //Sets the locationArray as a ko.observableArray.
+        self.items = ko.observableArray(locationArray);
 
+      //Computed function that filters through the locationArray
+        self.filteredItems = ko.computed(function() {
+          var filter = self.filter();
+          if (!filter) {
+          for(var i = 0; i < markers.length; i++)
+          {
+
+            markers[i].setVisible()
+            console.log(markers)
+          }
+          return self.items();
+          }
+          return self.items().filter(function(i) {
+          var m= i.title.toLowerCase().indexOf(filter) > -1;
+          i.marker.setVisible(m);
+          return m;
+      });
+    }
+  }
+  
   };
