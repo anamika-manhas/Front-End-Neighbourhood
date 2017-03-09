@@ -155,12 +155,34 @@ var myViewmodel= function()
                  this.URL = "";
                  this.street = "";
                  this.city = "";
-                 var client_id = WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ;
-                 var client_secret = ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY;
+                 client_id = WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ;
+                 client_secret = ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY;
 
-                 this.visible = ko.observableu(true);
-                 var URL = 'https://api.foursquare.com/v2/venues/search?11='+this.lat + ',' + this.lng + ',' + '&client_id' +
-                 client_id + '&client_secret' + client_secret + this.URL + this.street + this.city ;               
+                 this.visible = ko.observable(true);
+                 var URL1 = 'https://api.foursquare.com/v2/venues/search?11='+this.lat + ',' + this.lng + ',' + '&client_id' +
+                 client_id + '&client_secret' + client_secret + this.URL + this.street + this.city + this.name ;
+
+                 $.getJSON(URL1).done(function(info) {
+ 		             var res = data.response.venues[0];
+ 		             self.URL = res.url;
+ 		              if (typeof self.URL === 'undefined'){
+ 			            self.URL = "";
+ 		             }
+ 		              self.street = res.location.formattedAddress[0];
+             		  if(typeof self.street === 'undefined'){
+             			self.street = " not available";
+             		}
+                  	self.city = res.location.formattedAddress[1];
+             			if(typeof self.city === 'undefined'){
+             				self.city = " not available";
+             			}
+
+                 	}).fail(function() {
+                 		alert(" Please refresh the page.");
+                 	});
+
+
+
                }
 
 
