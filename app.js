@@ -136,7 +136,7 @@ var myViewmodel= function()
            };
 
 
-             function makeMarkerIcon (color){
+            function makeMarkerIcon (color){
              var markerIcon = new google.maps.MarkerImage(
              'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ color +'|40|_|%E2%80%A2',
                    new google.maps.Size(21, 34),
@@ -146,7 +146,7 @@ var myViewmodel= function()
                    return markerIcon;
                };
 
-               var location = function(info)
+            /*   var location = function(info)
                {
                  var self = this;
                  this.name = info.name;
@@ -179,7 +179,7 @@ var myViewmodel= function()
 
                  	}).fail(function() {
                  		alert(" Please refresh the page.");
-                 	});
+                 	});*/
 
 
 
