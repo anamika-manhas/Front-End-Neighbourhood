@@ -29,10 +29,12 @@
         </div>
       <div style="width:100%;" class="input-group">
       </div>
-        <input id="filterInputText" type="text" class="form-control" placeholder="filter" data-bind =""textInput: filter"" >
+        <input id="filterInputText" type="text" class="form-control" placeholder="filter" data-bind="event:{ keyup: filterInput}, value:abc ,valueUpdate: 'afterkeydown'" >
         <br>
       <ul class="list-group" data-bind="foreach: markers">
-        <a class="list-group-item" data-bind="text: title, event:{click: markerwindow}"></a>
+          <!-- ko if: show -->
+            <a class="list-group-item" data-bind="text: title, event:{click: markerwindow}"></a>
+          <!-- /ko -->
       </ul>
     </div>
     <div id="map" class="col-sm-8"></div>
@@ -44,8 +46,8 @@
     function initMap(){
     //Constructor creates a new map-only center and zoom are requires.
     map= new google.maps.Map(document.getElementById('map'),{
-      center: {lat:32.6365219, lng:74.9119411 },
-      zoom: 18,
+      center: {lat:32.7119114, lng:74.8609743 },
+      zoom: 10,
       mapTypeControl:false });
       ko.applyBindings(myViewmodel);
   }
