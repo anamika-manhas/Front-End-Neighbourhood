@@ -12,6 +12,7 @@
 2.Google Maps API
 3.jQuery
 4.FourSquare API
+5.Knockout
 
 ## How to execute 
 
