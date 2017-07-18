@@ -1,6 +1,5 @@
 var map;
 //Create a new blank array for all the listing markers.
-var markers = [];
 var locations = [{
         title: 'KC PLAZA',
         location: {
@@ -44,67 +43,6 @@ var locations = [{
 
 ];
 
-// Create style array to use with the map.
-var styles = [{
-        featureType: 'water',
-        stylers: [{
-            color: '#4690af'
-        }]
-    }, {
-        featureType: 'administrative',
-        elementType: 'labels.text.stroke',
-        stylers: [{
-                color: '#ccb3a7'
-            },
-            {
-                weight: '6'
-            }
-        ]
-    }, {
-        featureType: 'administrative',
-        elementType: 'labels.text.fill',
-        stylers: [{
-            color: '#bc8129'
-        }]
-    },
-    {
-        featureType: 'road.highway',
-        elementType: 'geometry.stroke',
-        stylers: [{
-                color: '#a38f85'
-            },
-            {
-                lightness: -40
-            }
-        ]
-    },
-    {
-        featureType: 'transit.station',
-        stylers: [{
-            weight: '9'
-        }, {
-            hue: '#e8113'
-        }]
-    }, {
-        featureType: 'road.highway',
-        elementType: 'labels.icon',
-        stylers: [{
-            visibility: 'off'
-        }]
-    },
-    {
-
-        featureType: 'road.highway',
-        elementType: 'geometry.fill',
-        stylers: [{
-                color: '#e0d5d0'
-            },
-            {
-                lightness: -25
-            }
-        ]
-    }
-];
 var myViewmodel = function() {
     var self = this;
     //style the markers a bit. this will be our listening  marker icon.
@@ -113,23 +51,38 @@ var myViewmodel = function() {
     var highlightedIcon = makeMarkerIcon('FFFF24');
     var infoWindow = new google.maps.InfoWindow();
     self.markers = ko.observableArray();
+    function suc(data) {
+        likes = data.response.venue.likes.count;
+    }
+    function err(e){
+        console.log("Error fetching data");
+    }
+  
+    function Highlight() {
+   		 this.setIcon(highlightedIcon);
+    }
+        
+    function Default() {
+     		this.setIcon(defaultIcon);
+ 	  }
+  	    
+    function Open() {
+        openInfowindow(this, infoWindow);
+    }
+  
     for (var i = 0; i < locations.length; i++) {
         // get the position from the location array.
         var position = locations[i].location;
         var title = locations[i].title;
         var likes = 0;
         //create a marker per location, and put into markers array.
+       
         $.ajax({
 
             url: 'https://api.foursquare.com/v2/venues/' + locations[i].venueID + '?client_id=WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ&client_secret=ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY&v=20170714',
             async: false,
-            success: function(data) {
-                likes = data.response.venue.likes.count;
-
-            },
-            error: function(error) {
-                console.log("Error fetching data");
-            }
+            success: suc,
+            error: err 
         });
         var marker = new google.maps.Marker({
             map: map,
@@ -141,17 +94,11 @@ var myViewmodel = function() {
             animation: google.maps.Animation.DROP,
         });
         self.markers.push(marker);
-        marker.addListener('mouseover', function() {
-            this.setIcon(highlightedIcon);
-        });
+        marker.addListener('mouseover',Highlight);
 
-        marker.addListener('mouseout', function() {
-            this.setIcon(defaultIcon);
-        });
+        marker.addListener('mouseout', Default);
 
-        marker.addListener('click', function() {
-            openInfowindow(this, infoWindow);
-        });
+        marker.addListener('click', Open);
 
 
 
