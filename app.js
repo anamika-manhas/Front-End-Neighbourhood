@@ -51,38 +51,40 @@ var myViewmodel = function() {
     var highlightedIcon = makeMarkerIcon('FFFF24');
     var infoWindow = new google.maps.InfoWindow();
     self.markers = ko.observableArray();
+
     function suc(data) {
         likes = data.response.venue.likes.count;
     }
-    function err(e){
+
+    function err(e) {
         console.log("Error fetching data");
     }
-  
+
     function Highlight() {
-   		 this.setIcon(highlightedIcon);
+        this.setIcon(highlightedIcon);
     }
-        
+
     function Default() {
-     		this.setIcon(defaultIcon);
- 	  }
-  	    
+        this.setIcon(defaultIcon);
+    }
+
     function Open() {
         openInfowindow(this, infoWindow);
     }
-  
+
     for (var i = 0; i < locations.length; i++) {
         // get the position from the location array.
         var position = locations[i].location;
         var title = locations[i].title;
         var likes = 0;
         //create a marker per location, and put into markers array.
-       
+
         $.ajax({
 
             url: 'https://api.foursquare.com/v2/venues/' + locations[i].venueID + '?client_id=WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ&client_secret=ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY&v=20170714',
             async: false,
             success: suc,
-            error: err 
+            error: err
         });
         var marker = new google.maps.Marker({
             map: map,
@@ -94,7 +96,7 @@ var myViewmodel = function() {
             animation: google.maps.Animation.DROP,
         });
         self.markers.push(marker);
-        marker.addListener('mouseover',Highlight);
+        marker.addListener('mouseover', Highlight);
 
         marker.addListener('mouseout', Default);
 
