@@ -42,8 +42,11 @@
            mapTypeControl:false });
            ko.applyBindings(myViewmodel);
          }
+          function ErrorHandling(){
+      document.getElementById('map-error').innerHTML = "Error in Map!"
+    }
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK6t3Ot0zaOEwwFPdmaJxJ_8jo19xk0fE&libraries=places,drawing,geometry&v=3&callback=initMap"
-         type="text/javascript" onerror="googleError()" async defer ></script>
+         type="text/javascript" onerror="ErrorHandling()" async defer ></script>
    </body>
 </html>
