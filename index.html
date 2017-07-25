@@ -32,20 +32,8 @@
       </div>
       <script type='text/javascript' src='jquery-3.1.1.min.js'></script>
       <script type='text/javascript' src='knockout.js'></script>
-      <script type="text/javascript" src="app.js"></script>
-      <script  type='text/javascript'>
-         function initMap(){
-         //Constructor creates a new map-only center and zoom are requires.
-         map= new google.maps.Map(document.getElementById('map'),{
-           center: {lat:32.7119114, lng:74.8609743 },
-           zoom: 10,
-           mapTypeControl:false });
-           ko.applyBindings(myViewmodel);
-         }
-          function ErrorHandling(){
-      document.getElementById('map-error').innerHTML = "Error in Map!"
-    }
-      </script>
+      <script type='text/javascript' src='app.js'></script>
+      <script  type='text/javascript' src="init.js"></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK6t3Ot0zaOEwwFPdmaJxJ_8jo19xk0fE&libraries=places,drawing,geometry&v=3&callback=initMap"
          type="text/javascript" onerror="ErrorHandling()" async defer ></script>
    </body>

@@ -53,13 +53,27 @@
         self.markers = ko.observableArray();
         self.error = ko.observable('');
 
-        function suc(data) {
-            likes = data.response.venue.likes.count;
+
+        function getLikes(id, marker) {
+
+            $.ajax({
+
+                url: 'https://api.foursquare.com/v2/venues/' + locations[i].venueID + '?client_id=WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ&client_secret=ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY&v=20170714'
+                //               
+            }).then(function(data) {
+                count = data.response.venue.likes.count;
+                if (count) {
+                    marker.likes = count;
+                } else if (count === 0) {
+                    marker.likes = count;
+                } else {
+                    marker.likes = "Error in Fetching Likes";
+                }
+            });
         }
 
-        function err(e) {
-            self.error("Data is unavailable.");
-        }
+
+
 
         function Highlight() {
             this.setIcon(highlightedIcon);
@@ -71,40 +85,33 @@
 
         function Open() {
             openInfowindow(this, infoWindow);
+            this.setAnimation(google.maps.Animation.DROP);
         }
 
         for (var i = 0; i < locations.length; i++) {
             // get the position from the location array.
             var position = locations[i].location;
             var title = locations[i].title;
-            var likes = 0;
+
             //create a marker per location, and put into markers array.
-
-            $.ajax({
-
-                url: 'https://api.foursquare.com/v2/venues/' + locations[i].venueID + '?client_id=WIHER35QWOA1G2FUHTFCNH03YMDGNCVNX3BECG51JZQWTTWJ&client_secret=ZIDSR0TARBSWAKITLFZO5YTYB2EPGP55SZDIHZE2GL2QLOOY&v=20170714',
-                async: true,
-                success: suc,
-                error: err
-            });
             var marker = new google.maps.Marker({
                 map: map,
                 position: position,
                 title: title,
-                likes: likes,
                 icon: defaultIcon,
                 show: ko.observable(true),
                 animation: google.maps.Animation.DROP,
             });
+
+            getLikes(locations[i].venueID, marker);
+
             self.markers.push(marker);
+
             marker.addListener('mouseover', Highlight);
 
             marker.addListener('mouseout', Default);
 
             marker.addListener('click', Open);
-
-
-
 
         }
 
